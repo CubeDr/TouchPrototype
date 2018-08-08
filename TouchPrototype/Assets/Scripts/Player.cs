@@ -6,6 +6,11 @@ public class Player : MonoBehaviour {
     public int maxHp = 100;
     private int hp=0;
 
+    private int damage = 1;
+    public int Damage {
+        get { return damage; }
+    }
+
     public HealthBar healthBar;
 
     private void Start() {

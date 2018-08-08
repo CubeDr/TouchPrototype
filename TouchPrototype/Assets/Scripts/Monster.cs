@@ -31,8 +31,29 @@ public class Monster : MonoBehaviour {
 
     private void Update() {
         if(Time.time > last) {
-            Vector3 spawn = spawns[Random.Range(0, 5)].position;
-            GameObject o = obstacleFactory.GetObstacle(Random.Range(0, 3), new MovementFalling(100), new ClickToDamagePlayer(engine.player), new FinishToDamagePlayer(engine.player, 1));
+            int obstacleId = Random.Range(0, 3);
+            Vector3 spawn;
+            if (obstacleId == 2) spawn = spawns[2].position;
+            else spawn = spawns[Random.Range(0, 5)].position;
+
+            IObstacleClick click = null;
+            IObstacleFinish finish = null;
+            switch( Random.Range(0, 4) ) {
+                case 0: // 반사
+                    click = new ClickToDamagePlayer(engine.player);
+                    break;
+                case 1: // 방어
+                    click = new ClickToBlock();
+                    break;
+                case 2: // 맨 밑
+                    finish = new FinishToDamagePlayer(engine.player);
+                    break;
+                case 3: // 추가 데미지
+                    break;
+            }
+            
+
+            GameObject o = obstacleFactory.GetObstacle(obstacleId, new MovementFalling(100), new ClickToDamagePlayer(engine.player), new FinishToDamagePlayer(engine.player, 1));
             o.transform.position = spawn;
             last = Time.time + 1f;
         }

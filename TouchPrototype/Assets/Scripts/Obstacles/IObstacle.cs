@@ -46,6 +46,22 @@ namespace ObstacleClick {
     public class ClickToBlock: IObstacleClick {
         public void OnClick() { }
     }
+
+    public class ClickToGainMoreDamage: IObstacleClick {
+        private Monster monster;
+        private Player player;
+        private float multiplier;
+
+        public ClickToGainMoreDamage(Monster monster, Player player, float multiplier) {
+            this.monster = monster;
+            this.player = player;
+            this.multiplier = multiplier;
+        }
+
+        public void OnClick() {
+            monster.DeltaHp(-(int)(player.Damage*multiplier));
+        }
+    }
 }
 
 namespace ObstacleFinish {

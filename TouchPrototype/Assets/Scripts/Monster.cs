@@ -31,29 +31,31 @@ public class Monster : MonoBehaviour {
 
     private void Update() {
         if(Time.time > last) {
-            int obstacleId = Random.Range(0, 3);
+            int obstacleId = Random.Range(0, 4);
             Vector3 spawn;
             if (obstacleId == 2) spawn = spawns[2].position;
             else spawn = spawns[Random.Range(0, 5)].position;
 
             IObstacleClick click = null;
             IObstacleFinish finish = null;
-            switch( Random.Range(0, 4) ) {
-                case 0: // 반사
+            switch( obstacleId ) {
+                case 0: // 반사 - 원
                     click = new ClickToDamagePlayer(engine.player);
                     break;
-                case 1: // 방어
+                case 1: // 방어 - 사각형
                     click = new ClickToBlock();
                     break;
-                case 2: // 맨 밑
-                    finish = new FinishToDamagePlayer(engine.player);
+                case 2: // 추가 데미지 - 바
+                    click = new ClickToGainMoreDamage(engine.monster, engine.player, 9);
                     break;
-                case 3: // 추가 데미지
+                case 3: // 맨 밑 - 삼각형
+                    click = new ClickToDestroy();
+                    finish = new FinishToDamagePlayer(engine.player);
                     break;
             }
             
 
-            GameObject o = obstacleFactory.GetObstacle(obstacleId, new MovementFalling(100), new ClickToDamagePlayer(engine.player), new FinishToDamagePlayer(engine.player, 1));
+            GameObject o = obstacleFactory.GetObstacle(obstacleId, new MovementFalling(100), click, finish);
             o.transform.position = spawn;
             last = Time.time + 1f;
         }

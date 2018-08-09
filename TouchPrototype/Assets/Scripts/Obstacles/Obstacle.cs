@@ -14,12 +14,12 @@ public class Obstacle : MonoBehaviour, IPointerDownHandler {
 	}
 
     public void OnPointerDown(PointerEventData eventData) {
-        if(click != null) click.OnClick();
+        if(click != null) click.OnClick(this);
     }
 
     void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.CompareTag("Finish")) {
-            if (finish != null) finish.OnFinish();
+            if (finish != null) finish.OnFinish(this);
             Destroy(gameObject);
         }
     }

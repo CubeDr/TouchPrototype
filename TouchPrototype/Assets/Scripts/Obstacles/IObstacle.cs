@@ -7,11 +7,11 @@ public interface IObstacleMovement {
 }
 
 public interface IObstacleClick {
-    void OnClick();
+    void OnClick(Obstacle o);
 }
 
 public interface IObstacleFinish {
-    void OnFinish();
+    void OnFinish(Obstacle o);
 }
 
 namespace ObstacleMovement {
@@ -23,7 +23,7 @@ namespace ObstacleMovement {
         }
 
         public void Move(Transform transform, float dt) {
-            transform.Translate(Vector2.down * speed * dt);
+            transform.Translate(Vector2.down * speed * dt, Space.World);
         }
     }
 }
@@ -38,13 +38,13 @@ namespace ObstacleClick {
             this.damage = damage;
         }
 
-        public void OnClick() {
+        public void OnClick(Obstacle o) {
             player.DeltaHp(-damage);
         }
     }
 
     public class ClickToBlock: IObstacleClick {
-        public void OnClick() { }
+        public void OnClick(Obstacle o) { }
     }
 
     public class ClickToGainMoreDamage: IObstacleClick {
@@ -58,8 +58,14 @@ namespace ObstacleClick {
             this.multiplier = multiplier;
         }
 
-        public void OnClick() {
+        public void OnClick(Obstacle o) {
             monster.DeltaHp(-(int)(player.Damage*multiplier));
+        }
+    }
+
+    public class ClickToDestroy: IObstacleClick {
+        public void OnClick(Obstacle o) {
+            GameObject.Destroy(o.gameObject);
         }
     }
 }
@@ -74,7 +80,7 @@ namespace ObstacleFinish {
             this.damage = damage;
         }
 
-        public void OnFinish() {
+        public void OnFinish(Obstacle o) {
             player.DeltaHp(-damage);
         }
     }

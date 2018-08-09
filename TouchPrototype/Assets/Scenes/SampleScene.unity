@@ -302,6 +302,7 @@ MonoBehaviour:
   - {fileID: 1921016542890804, guid: fa8ddb1cf77e2ac4c91cde120cc977a5, type: 2}
   - {fileID: 1599006630405396, guid: a1645488eb44d78449058972507484af, type: 2}
   - {fileID: 1281153476401876, guid: aa13e27abaa6c0040bc0885608a184fb, type: 2}
+  - {fileID: 1312421246156170, guid: 190d2c882e789e9469dea1d77415c5d7, type: 2}
   playArea: {fileID: 521396934}
 --- !u!4 &290594613
 Transform:
